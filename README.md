@@ -20,7 +20,7 @@ just input something like
 ```
 for useing bootstrap3, font-awesome and jquery
 
-Then your new project will be ready to use.
+then your new project will be ready to use.
 
 ##Run your new project
 
@@ -29,11 +29,13 @@ cd to your project and run
 $ ./startServer
 ```
 and a simple static server will run at localhost:8002
+
 if you want to change the port, run
 ```shell
 $ ./startServer --port=xxxx
 ```
 Server script is in ./server/server.coffee and written in coffee-script
+
 All request gose to ./static
 
 ##How it work
@@ -48,9 +50,11 @@ WebBuilder will:
 
 ##Modify template files
 just edit files in webTemplate/ for dir structure and template.html for index.html.
+
 It'll work as your wish
 
 ##Add your own libs
 just add them into staticLibs/
+
 you'll know how it work ( because it's super simple! )
 
