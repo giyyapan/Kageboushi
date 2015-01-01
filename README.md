@@ -38,11 +38,12 @@ All request gose to ./static
 
 ##How it work
 WebBuilder will:
-1. copy binary file in bin/ and node_modules to your new project ensure server script can be run in an environment without nodejs.
+>1. copy binary file in bin/ and node_modules to your new project ensure server script can be run in an environment without nodejs.
 2. copy all files and dirs under webTemplate/ to your new project
 3. copy libs you choose from staticLibs/ to your newProject/static/libs
 4. generate index.html file and try to reference every js/css file from libs you choose into it
 5. put index.html file input newProject/static
+
 (super simple isnt it ? lol)
 
 ##Modify template files
