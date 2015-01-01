@@ -46,8 +46,9 @@ WebBuilder will:
 (super simple isnt it ? lol)
 
 ##Modify template files
-just edit files in webTemplate/ and template.html for index.html.
+just edit files in webTemplate/ for dir structure and template.html for index.html.
 It'll work as your wish
 
 ##Add your own libs
-just add them into staticLibs/ you'll know how it work ( because it's super simple! )
+just add them into staticLibs/
+you'll know how it work ( because it's super simple! )
