@@ -1,0 +1,64 @@
+body *{
+		box-sizing:border-box;
+}
+ul {list-style-type: none;}
+
+//utils class
+.transform(@value){
+    transform:@value;
+    -webkit-transform:@value;
+    -moz-transform:@value;
+    -o-transform:@value;
+    -ms-transform:@value;
+}
+.transition(@value:.1s ease all){
+    -webkit-transition:@value;
+    -o-transition:@value;
+    -moz-transition:@value;
+    -ms-transition:@value;
+    transition:@value;
+}
+.animation(@value){
+    animation:@value;
+    -webkit-animation:@value;
+}
+.filter(@value){
+    filter:@value;
+    -webkit-filter:@value;
+    -moz-filter:@value;
+    -o-filter:@value;
+}
+.no-filter{
+		filter:none;
+    -webkit-filter:none;
+    -moz-filter:none;
+}
+.no-word-break{
+    overflow:hidden;
+    word-wrap: break-word;
+    white-space: nowrap;
+    word-break: break-all;
+    text-overflow: ellipsis;
+}
+.no-user-select{
+    user-select:none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+}
+.invisible{visibility:hidden;}
+.hidden{display:noneg;}
+
+@-webkit-keyframes pop {
+    0%{-webkit-transform:scale(1);}
+    50% {-webkit-transform:scale(1.2);}
+    100% {-webkit-transform:scale(1);}
+} 
+@keyframes pop {
+    0%{transform:scale(1);}
+    50% {transform:scale(1.4);}
+    100% {transform:scale(1);}
+}
+.pop{.animation(pop .4s);}
