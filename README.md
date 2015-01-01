@@ -52,3 +52,4 @@ It'll work as your wish
 ##Add your own libs
 just add them into staticLibs/
 you'll know how it work ( because it's super simple! )
+
