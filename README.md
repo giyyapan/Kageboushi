@@ -58,3 +58,9 @@ just add them into staticLibs/
 
 you'll know how it work ( because it's super simple! )
 
+##Wha Next?
+>1. add more libs
+2. add '$./build lslib [keyword to search]' to list all libs
+3. add '$./build add {lib number} projectPath_or_htmlFile' to add a lib into an exist project(update all html to refference them automaticly)
+4. add package.json and publish to npm
+
