@@ -25,8 +25,8 @@ Then your new project will be ready to use.
 ##Run your new project
 
 cd to your project and run
-$ ```shell
-./startServer
+```shell
+$ ./startServer
 ```
 and a simple static server will run at localhost:8002
 if you want to change the port, run
