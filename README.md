@@ -1,4 +1,4 @@
-#Web Builder
+#Kageboushi かげぼうし 影法師
 
 A super simple tool to create your front-end web project super fast!
 
