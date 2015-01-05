@@ -1,6 +1,6 @@
-#Kageboushi かげぼうし 影法師
+#Kageboushi 
 
-A super simple tool to create your front-end web project super fast!
+Kageboushi (かげぼうし 影法師) is a super simple tool to create your front-end web project super fast!
 
 ##Generate a project
 
