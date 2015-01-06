@@ -1,0 +1,31 @@
+#!/bin/bash
+lib=$1
+libPath=$2
+imports=$3
+
+counter=0
+
+for file in `ls $libPath | grep .js` `ls $libPath | grep .css`;
+do
+		echo libs/$lib/$file >> $imports
+		counter=counter+1
+done
+if [ -d $libPath/js ]; then
+		for file in `ls $libPath/js | grep .js`;
+		do
+				echo libs/$lib/js/$file >> $imports
+				counter=counter+1
+		done
+fi
+if [ -d $libPath/css ]; then
+		for file in `ls $libPath/css | grep .css`;
+		do
+				echo libs/$lib/css/$file >> $imports
+				counter=counter+1
+		done
+fi
+yellow=33
+if [[ $counter == 0 ]]; then
+		echo -e "\033[${yellow}m[WARRING]\033[0m Lib '$lib' has no .js or .css file to reference." \
+				"Only files in js/ css/ or lib's root directory can be reference automatically"
+fi

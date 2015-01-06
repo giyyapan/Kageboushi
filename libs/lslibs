@@ -1,0 +1,21 @@
+#!/bin/bash
+search=$1
+StaticLibs=(`ls $CWD/staticLibs`)
+declare -a output
+numberStyle=32 #green
+searchStyle=31 #red
+for idx in ${!StaticLibs[@]};
+do
+		numberStr="\033[${numberStyle}m[$idx]\033[0m"
+		if [ $search ]; then
+				if [[ ${StaticLibs[idx]} == *$search* ]]; then
+						str=${StaticLibs[idx]/$search/"\033[${searchStyle}m${search}\033[0m"}
+						echo $str
+						output[$idx]="${numberStr}${str}"
+				fi
+		else		
+				output[$idx]="${numberStr}${StaticLibs[idx]}"
+		fi
+done
+echo -e ${output[@]}
+

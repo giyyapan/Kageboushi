@@ -1,0 +1,113 @@
+#!/bin/bash
+red=31
+cleanup(){
+		echo 'clean up for add lib action ...'
+		[ -d $CWD/tmp ] && rm -r $CWD/tmp
+		exit 0
+}
+throwError(){
+		echo ""
+		echo -e "\033[${red}mError\033[0m :"
+		for a in "$@"; do
+				echo -e "  $a"
+		done
+		echo ""
+}
+ctrl_c(){
+		cleanup
+}
+trap ctrl_c INT
+
+declare Target
+declare TargetLibPath
+
+StaticLibs=(`ls $CWD/staticLibs`)
+[ -d $CWD/tmp ] && rm -r $CWD/tmp #删除临时文件
+mkdir $CWD/tmp
+imports=$CWD/tmp/addLibImports
+touch $imports
+
+writeReference(){
+		#echo "!"$1
+		if [ -d $CWD/staticLibs/$1 ]; then
+				#echo "libname"
+				lib=$1
+		elif echo $1 | egrep -q '^[0-9]+$'; then
+				#echo "number"
+				lib=${StaticLibs[$1]}
+				if [ ! $lib ]; then
+						throwError \
+								"Invalid lib number '\033[${red}m$1\033[0m'" \
+								"Use 'kb lslibs' to see all available libs"
+						cleanup
+				fi
+		else
+				throwError \
+						"Invalid lib identifier '\033[${red}m$1\033[0m'" \
+						"Please enter lib number or lib name" \
+						"Use 'kb lslibs' to see all available libs"
+				cleanup
+		fi
+		libPath=$CWD/staticLibs/$lib
+		echo "Copy contents from $lib..."
+		# 将需要自动填充到html中的文件(css,js)存在临时文件中
+		cp -r $libPath $TargetLibPath/$lib
+		$CWD/libs/generateImports $lib $libPath $imports
+}
+declare -a args=($*)
+Target=${args[$#-1]}
+echo "target :" $Target
+
+if [ ! -d $Target ] && [ ! -e $Target ]; then
+		throwError \
+				"invalid target $Target" \
+				"Please a html file or project genrated by Kageboushi as 1st argument"
+		cleanup
+fi
+
+if [ -d $Target ]; then
+		# target is a path
+		if [ ! -e $Target/.kb ]; then
+				throwError \
+						"target dir is not a Kageboushi genearated project" \
+						"please specifc a html file to add lib"
+				cleanup
+		fi
+		TargetLibPath=$Target/static/libs
+else
+		#target is a file
+		if [[ $Target != *.html ]]; then
+				throwError "target file shuld be an .html file"
+				cleanup
+		fi
+		TargetLibPath=`dirname $Target`/libs
+fi
+
+[ ! -d $TargetLibPath ] && mkdir $TargetLibPath
+if [ ! -d $TargetLibPath ]; then
+		throwError \
+				"Failed to create target libs dir $TargetLibPath" \
+				"Is there already a file ? or do you have permission ?"				
+		cleanup
+fi
+
+echo "Target lib path is $TargetLibPath"
+
+for arg in $*;
+do
+		if [ $arg != $Target ]; then
+				writeReference $arg
+		fi
+done
+echo `cat $imports`
+if [ -d $Target ]; then
+		for filename in `ls $Target/static | grep .html`;
+		do
+				file=$Target/static/$filename
+				$CWD/runtime/coffee $CWD/libs/generateHtml.coffee $file $CWD/template.html $imports
+		done
+else
+		$CWD/runtime/coffee $CWD/libs/generateHtml.coffee $Target $CWD/template.html $imports
+fi
+
+

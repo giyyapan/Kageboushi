@@ -1,0 +1,4 @@
+#!/bin/bash
+binPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export CWD=$binPath/..
+$CWD/libs/kageboushi $@

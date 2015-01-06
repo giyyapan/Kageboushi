@@ -1,0 +1,4 @@
+#!/bin/bash
+currentPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#echo $CWD
+node $currentPath/../node_modules/coffee-script/bin/coffee $@

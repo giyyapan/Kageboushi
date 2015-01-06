@@ -1,0 +1,67 @@
+#!/bin/bash
+throwError(){
+		echo "Error:" $@ #参数
+		exit 1
+}
+ctrl_c(){
+		echo 'clean up for create action ...'
+		[ -d $TargetPath ] && rm -r $TargetPath
+		[ -d $CWD/tmp ] && rm -r $CWD/tmp
+		exit 0
+}
+trap ctrl_c INT
+
+TargetPath=$1
+[ ! $TargetPath ] && throwError "Please input project path you what to build e.g. 'build ~/testProject'"
+
+declare -a StaticLibs #声明数组，可以省略
+StaticLibs=(`ls $CWD/staticLibs`)
+
+echo "Create Project Directory" $TargetPath
+if [ -d $TargetPath ] || [ -f $TargetPath ]; 
+then
+		throwError "Target Directory exists，please remove it first"
+fi
+
+mkdir $TargetPath
+if [ ! -d $TargetPath ];
+then
+		throwError "Creating Directory failed，wrong path or no permission？"
+fi
+
+echo "Copy basic templates..."
+cp -r $CWD/webTemplate/* $TargetPath
+echo "Copy binary files..."
+cp -r $CWD/runtime $TargetPath/runtime
+mkdir $TargetPath/node_modules
+cp -r $CWD/node_modules/coffee-script $TargetPath/node_modules/
+
+echo "Select libraries you'd like to use(input the number split by space e.g. '0 1 2')："
+$CWD/libs/lslibs
+
+[ -d $CWD/tmp ] && rm -r $CWD/tmp #删除临时文件
+mkdir $CWD/tmp
+imports=$CWD/tmp/imports
+touch $imports
+
+read ans #读取用户输入
+for number in $ans;
+do
+		lib=${StaticLibs[$number]}
+		if [ ! $lib ]; then
+				rm -r $TargetPath
+				throwError "invalid number : $number"
+		fi
+		libPath=$CWD/staticLibs/$lib
+		echo "Copy contents from $lib..."
+		# 将需要自动填充到html中的文件(css,js)存在临时文件中
+		cp -r $libPath $TargetPath/static/libs/$lib
+		$CWD/libs/generateImports $lib $libPath $imports
+done
+
+echo "Generating index.html file："`cat $imports`
+targetHtml=$TargetPath/static/index.html
+#echo $targetHtml $CWD/template.html $imports
+$CWD/runtime/coffee $CWD/libs/generateHtml.coffee $targetHtml $CWD/template.html $imports
+
+[ -d $CWD/tmp ] && rm -r $CWD/tmp #删除临时文件

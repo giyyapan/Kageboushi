@@ -1,0 +1,30 @@
+{
+  "name": "kageboushi",
+  "version": "1.0.0",
+  "description": "a simple tool to create your front-end web project",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "cheerio": "^0.18.0",
+    "coffee-script": "^1.8.0"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giyyapan/Kageboushi.git"
+  },
+  "keywords": [
+    "web","generator"
+  ],
+  "author": "GiyyaPan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/giyyapan/Kageboushi/issues"
+  },
+  "homepage": "https://github.com/giyyapan/Kageboushi"
+}

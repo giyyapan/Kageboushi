@@ -1,3 +1,3 @@
 #!/bin/bash
 currentPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-$currentPath/bin/coffee $currentPath/server/server.coffee $@
+$currentPath/runtime/coffee $currentPath/server/server.coffee $@
